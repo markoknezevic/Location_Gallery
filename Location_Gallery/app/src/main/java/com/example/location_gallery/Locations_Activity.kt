@@ -43,7 +43,6 @@ class Locations_Activity : AppCompatActivity() {
 
         getData()
 
-
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
             val intent = Intent(applicationContext,Show_Location_Activity :: class.java)
@@ -57,7 +56,6 @@ class Locations_Activity : AppCompatActivity() {
             intent.putExtra("folderName",folderName[position])
             intent.putExtra("date",dateString[position])
 
-
             startActivity(intent)
         }
     }
@@ -65,7 +63,6 @@ class Locations_Activity : AppCompatActivity() {
     fun getData(){
 
         val newRef = firabaseDatabase!!.getReference("Data")
-
 
         newRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
@@ -86,7 +83,6 @@ class Locations_Activity : AppCompatActivity() {
                     val hashMap = i.value as HashMap<String,String>
 
                     if(hashMap.size > 0 && hashMap["email"] == mAuth!!.currentUser!!.email && (pickedDateString == hashMap["date"] || pickedDateString == null)){
-
 
                         if(hashMap["name"] != null)
                             name.add(hashMap["name"]!!)
@@ -121,17 +117,13 @@ class Locations_Activity : AppCompatActivity() {
                         adapter!!.notifyDataSetChanged()
                     }
                 }
-
             }
 
             override fun onCancelled(p0: DatabaseError) {
 
             }
         })
-
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = menuInflater
@@ -139,7 +131,6 @@ class Locations_Activity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
-
 
     fun datePicker  (){
         var c = Calendar.getInstance()
@@ -153,10 +144,7 @@ class Locations_Activity : AppCompatActivity() {
             getData()
         },year,month,day)
 
-
         dpd.show()
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -170,14 +158,11 @@ class Locations_Activity : AppCompatActivity() {
         if(item?.itemId == R.id.date){
 
             datePicker()
-
-
         }
 
         if(item?.itemId == R.id.allLocations){
             pickedDateString = null
             getData()
-
         }
 
         return super.onOptionsItemSelected(item)

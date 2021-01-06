@@ -78,9 +78,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setOnMapLongClickListener(myListener)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-
-
-
         locationListener = object : LocationListener{
 
             override fun onLocationChanged(location: Location?) {
@@ -90,7 +87,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     mMap.addMarker(MarkerOptions().position(userLoc).title("Your Location"))
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc,13f))
-                  //  locationManager!!.removeUpdates(locationListener)
                 }
             }
 
@@ -116,7 +112,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient!!.lastLocation.addOnCompleteListener { task ->
                 if(task.isSuccessful){
                     val loc = task.result
-                    val pos = LatLng(loc!!.latitude, loc!!.longitude)
+
+                    var pos = LatLng(43.068888, 20.820356)
+
+                    if(loc != null){
+                        pos = LatLng(loc!!.latitude, loc!!.longitude)
+                    }
+
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,15f))
                 }
             }.addOnFailureListener { exception ->
@@ -143,8 +145,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }.addOnFailureListener { exception ->
                     Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
                 }
-
-
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
